@@ -64,9 +64,9 @@ This folder contains material related to the article "Amplitudes of Quadratic Qu
     - ImRatioNL: Imaginary part of the normalized ratio of nonlinear amplitude / (linear amplitude 1 * linear amplitude 2)
 
 To recover the actual ratio from the normalized ratio given in the csv, multiply it by (-1)^m ThreeJSymbol[{l,-m}, {l1,m1}, {l2,m2}] / SymmetryFactor, where SymmetryFactor is 2 if the two linear modes are the same (i.e. l1=l2, m1=m2, n1=n2, mirror1=mirror2) and 1 otherwise.
-We provide the minimal possible set of nonlinear amplitudes; if the one you are searching seems not to be in the CSV, try with the symmetric one. E.g. you're searching for l1=2, l1+m1 odd, l2=3, l2+m2 even: this value is not in the table, but you can find the value for l1=3, l1+m1 even, l2=2, l2+m2 odd, which has the same nonlinear ratio. Be careful to the order of l1 and l2 when multiplying by the 3J symbol. Our rules for providing the minimal set of amplitudes are as follow:
-    - If l1+m1 and l2+m2 have the same parity, we give only values for l1 <= l2
-    - If l1+m1 and l2+m2 have different parities, mode number 1 is the even mode
+We provide the minimal possible set of nonlinear amplitudes; if the one you are searching seems not to be in the CSV, try with the symmetric one. E.g. you're searching for l1=2, l1+m1 odd, l2=3, l2+m2 even: this value is not in the table, but you can find the value for l1=3, l1+m1 even, l2=2, l2+m2 odd, which has the same nonlinear ratio. Be careful to the order of l1 and l2 when multiplying by the 3J symbol. Our rules for providing the minimal set of amplitudes are as follows:
+ - If l1+m1 and l2+m2 have the same parity, we give only values for l1 <= l2
+ - If l1+m1 and l2+m2 have different parities, mode number 1 is the even mode
 For mirror modes, we provide only values where Re(omegaNL)>0, as nonlinear modes with negative real part are themselves mirror modes at second order and thus can be found assuming reflection symmetry.
 
 
