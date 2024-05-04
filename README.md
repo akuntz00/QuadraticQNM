@@ -73,6 +73,7 @@ For mirror modes, we provide only values where Re(omegaNL)>0, as nonlinear modes
 
 2) fetcher.py: Convenience class which fetches the nonlinear ratio for a given combination of parameters. Example usage:
 
+QuadraticQNM(l=4, l1=2, l2=2, m1=2, m2=2, n1=0, n2=0, mirror=False, mirror1or2=False).omega()
 QuadraticQNM(l=4, l1=2, l2=2, m1=2, m2=2, n1=0, n2=0, mirror=False, mirror1or2=False).NLRatio()
 
 where mirror=True if you want a mirror mode at second order (i.e. with negative real part of the frequency), and mirror1or2=True if you want one of the parent modes to be a mirror mode.
