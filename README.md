@@ -45,7 +45,7 @@ Toolkit for computing quadratic quasi-normal modes amplitudes
 
 
 
-This folder contains material related to the article "Amplitudes of Quadratic Quasi-Normal Modes for a Schwarzschild Black Hole" by Bruno Buccioti, Leonardo Juliano, Adrien Kuntz, Enrico Trincherini:
+This folder contains material related to the article "Quadratic Quasi-Normal Modes of a Schwarzschild Black Hole" by Bruno Buccioti, Leonardo Juliano, Adrien Kuntz, Enrico Trincherini:
 
 
 
