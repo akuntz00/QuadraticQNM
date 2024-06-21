@@ -39,7 +39,7 @@ Toolkit for computing quadratic quasi-normal modes amplitudes
 
 
 
-################################  QUADRATIC QUASI-NORMAL MODES  ###########################################
+########  QUADRATIC QUASI-NORMAL MODES  #######
 
 
 
@@ -84,7 +84,7 @@ To run this Python code you'll need the qnm package from Black Hole Perturbation
 
 
 
-2) AsymptoticRelations.wl: Relations giving the asymptotic normalized ratio of amplitudes R in the TT gauge from the result of the numerical integration of the second-order Regge-Wheeler or Zerilli equations, taking into account all the term generated when changing gauge as explained in Section 4. The parameters in the file are:
+3) AsymptoticRelations.wl: Relations giving the asymptotic normalized ratio of amplitudes R in the TT gauge from the result of the numerical integration of the second-order Regge-Wheeler or Zerilli equations, taking into account all the term generated when changing gauge as explained in Section 4. The parameters in the file are:
     - ROOO: Asymptotic ratio of strain amplitudes for large r of the quadratic QNM in the TT gauge (i.e. the ratio displayed in eq. 5.1 and 5.2) for mode 1 odd, mode 2 odd, and quadratic mode odd. Similar notation follow for other parities (e.g. ROOE -> mode 1 odd, mode 2 odd, quadratic mode even). 
     - NUMERIC: Asymptotic limit for large r of the ratio of second-order RW/Z variable divided by the product of first-order RW/Z variables from Leaver solution
     - JS[{l1, -s1}, {l2, -s2}, {l, s}]: Three-J symbol
@@ -92,27 +92,27 @@ To recover the actual ratio from the normalized ratio given in the file, multipl
 
 
 
-3) fctSource.zip: zip file containing fctSourceOOO.wl (and similar files): Four functions entering the source term as in eq.(3.5) of the paper for two odd linear modes generating an odd nonlinear mode (and similarly for other files: e.g., fctSourceOOE is for odd first linear mode, odd second linear mode, and even nonlinear mode). For even second-order modes, we give both the functions entering Zerilli equation (e.g. fctSource1Z) or the functions entering RW equation (e.g. fctSource1RW) after Chandrasekhar transformation as described in eq.(3.12). If the two linear perturbations are the same (i.e. l1=l2, m1=m2, n1=n2, mirror1=mirror2) you need to divide the functions provided by a symmetry factor of 2.
+4) fctSource.zip: zip file containing fctSourceOOO.wl (and similar files): Four functions entering the source term as in eq.(3.5) of the paper for two odd linear modes generating an odd nonlinear mode (and similarly for other files: e.g., fctSourceOOE is for odd first linear mode, odd second linear mode, and even nonlinear mode). For even second-order modes, we give both the functions entering Zerilli equation (e.g. fctSource1Z) or the functions entering RW equation (e.g. fctSource1RW) after Chandrasekhar transformation as described in eq.(3.12). If the two linear perturbations are the same (i.e. l1=l2, m1=m2, n1=n2, mirror1=mirror2) you need to divide the functions provided by a symmetry factor of 2.
 
 
 
-4) diffeo.wl: Asymptotic diffeomorphism to go from TT gauge to RWZ gauge at second order, as explained in section 4.2.2 of the paper. Ae1 (Ao1) is the asymptotic amplitude of the Zerilli (RW) variable for linear mode 1, see eq. 4.3, and same for mode 2. JS[{l1, -s1}, {l2, -s2}, {l, s}] is the three-J symbol.
+5) diffeo.wl: Asymptotic diffeomorphism to go from TT gauge to RWZ gauge at second order, as explained in section 4.2.2 of the paper. Ae1 (Ao1) is the asymptotic amplitude of the Zerilli (RW) variable for linear mode 1, see eq. 4.3, and same for mode 2. JS[{l1, -s1}, {l2, -s2}, {l, s}] is the three-J symbol.
 
 
 
-5) ExplicitSmunu.nb: This notebook defines a perturbed black hole metric and computes its Einstein tensor to second order in epsilon, giving the tensor S_{\mu\nu}. We then express the tensor in terms of linear master scalars, and finally split the result into the three possible parity sectors: even x even, even x odd, odd x odd. The resulting three tensors SourceSimpleEE, SourceSimpleEO, SourceSimpleOO are saved as Mathematica objects.
+6) ExplicitSmunu.nb: This notebook defines a perturbed black hole metric and computes its Einstein tensor to second order in epsilon, giving the tensor S_{\mu\nu}. We then express the tensor in terms of linear master scalars, and finally split the result into the three possible parity sectors: even x even, even x odd, odd x odd. The resulting three tensors SourceSimpleEE, SourceSimpleEO, SourceSimpleOO are saved as Mathematica objects.
 
 
 
-6) Source.wl: One can import the S_{\mu\nu} tensor computed above directly using 'Get[FileNameJoin[{NotebookDirectory[], "Source.wl"}]];', assuming the Mathematica code runs in the same directory as 'Source.wl'.
+7) Source.wl: One can import the S_{\mu\nu} tensor computed above directly using 'Get[FileNameJoin[{NotebookDirectory[], "Source.wl"}]];', assuming the Mathematica code runs in the same directory as 'Source.wl'.
 
 
 
-7) Linear.wl: This Mathematica object, when imported using 'Get[FileNameJoin[{NotebookDirectory[], "Linear.wl"}]];', defines four variables \psi EH, \psi OH, \psi EI, \psi OI (there is no space in the Mathematica definition). These are the ratios \psi'(r) / \psi(r) computed to sufficient order in 1/r (Infinity, second capital letter I) or (r-2M) (Horizon, second capital letter H) for linear master scalars in the Even or Odd sector (first capital letter E or O respectively).
+8) Linear.wl: This Mathematica object, when imported using 'Get[FileNameJoin[{NotebookDirectory[], "Linear.wl"}]];', defines four variables \psi EH, \psi OH, \psi EI, \psi OI (there is no space in the Mathematica definition). These are the ratios \psi'(r) / \psi(r) computed to sufficient order in 1/r (Infinity, second capital letter I) or (r-2M) (Horizon, second capital letter H) for linear master scalars in the Even or Odd sector (first capital letter E or O respectively).
 
 
 
-8) Asymptoticsxxx.nb: Each of these six notebooks deals with a single parity sector (first two letters after Asymptotics indicate the parity of the linear sectors one is coupling, the last letter indicates the parity of the quadratic sector). Schematically, one projects the relevant components of S_{\mu\nu} onto a tensor spherical harmonics basis, integrating in the angular variables using the known integral of three spin-weighted spherical harmonics, and computes the source for the RWZ equation. One then checks the behaviour at the horizon and at infinity, correcting it where needed. Finally, one reconstructs the metric components at leading order in large r in RW gauge. Each code saves a file 'Sourcexxx.wl' that contains the regulated source 'Sourcexxx', plus the relevant metric components at large r. The link between the regular and irregular master scalar is provided by \Delta(r), which is defined as described in the paper.
+9) Asymptoticsxxx.nb: Each of these six notebooks deals with a single parity sector (first two letters after Asymptotics indicate the parity of the linear sectors one is coupling, the last letter indicates the parity of the quadratic sector). Schematically, one projects the relevant components of S_{\mu\nu} onto a tensor spherical harmonics basis, integrating in the angular variables using the known integral of three spin-weighted spherical harmonics, and computes the source for the RWZ equation. One then checks the behaviour at the horizon and at infinity, correcting it where needed. Finally, one reconstructs the metric components at leading order in large r in RW gauge. Each code saves a file 'Sourcexxx.wl' that contains the regulated source 'Sourcexxx', plus the relevant metric components at large r. The link between the regular and irregular master scalar is provided by \Delta(r), which is defined as described in the paper.
 N.B. Parity selection rules allow us to replace by hand (-1)^{l1+l2+l} with a new variable 'parity' = 1, -1 where the sign only depends on the parity sector. This allows for shorter expressions, at the expense of a source term which can only be trusted for values of l1,l2,l which respect parity selection rules. For all other values, we already know S=0.
 The definition of \Delta allows a logarithmic term, whose coefficient always turns out to be zero. This is checked only for values of l1,l2,l allowed by parity selection rules, because only then can our Source be trusted.
 
