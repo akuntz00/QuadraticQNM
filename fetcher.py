@@ -25,6 +25,8 @@ class QuadraticQNM:
     def __init__(self, l, l1, l2, m1, m2, n1, n2, kappa1, kappa2, mirror1=False, mirror2=False):
         if l > l1+l2 or l < np.abs(l1-l2):
             raise Exception('l, l1 and l2 should respect the Clebsch-Gordan inequality')
+        if m1+m2 > l:
+            raise Exception('l must be greater than m1+m2')
 
         self.l = l
         self.m = m1+m2
@@ -56,13 +58,13 @@ class QuadraticQNM:
             elif abs(np.real(omega2))>abs(np.real(omega1)) and self.mirror2:
                 self.mirror = True
 
-        if self.mirror: # Mirror all m's and mirrors
+        if self.mirror: # Mirror all m's and mirrors. 
             self.mirror1 = not self.mirror1
             self.mirror2 = not self.mirror2
             self.m1 = - self.m1
             self.m2 = - self.m2
             self.m = - self.m
-            self.kappa1 = 1/np.conjugate(self.kappa1)
+            self.kappa1 = 1/np.conjugate(self.kappa1) #cf eq. 5.3 of 2406.14611
             self.kappa2 = 1/np.conjugate(self.kappa2)
             # Reinitialize parent modes
             self.parent1=LinearQNM(self.l1, self.m1, self.n1, self.mirror1)
@@ -78,6 +80,8 @@ class QuadraticQNM:
 
     def omega(self):
         omega = self.parent1.omega() + self.parent2.omega()
+        if self.mirror:
+            omega = - np.conjugate(omega)
         return omega
 
     def NLRatio(self):
@@ -87,10 +91,10 @@ class QuadraticQNM:
         NLRatio = np.zeros((2,2), dtype=complex)
         for p1 in [0,1]:
             for p2 in [0,1]:
-                p = (self.l+self.l1+self.l2-p1-p2)%2
+                p = (self.l+self.l1+self.l2-p1-p2)%2 #cf eq. 2.21 of 2406.14611
 
                 # Have to find which number we fetch in the file; inverse 1 and 2 if necessary
-                if p1==p2: #EE or OO -> l1<l2
+                if p1==p2: #EE or OO -> we have only l1<l2 in the file
                     if self.l1 <= self.l2:
                         inverse = False
                     else:
@@ -124,7 +128,7 @@ class QuadraticQNM:
                     p1Fetch = p2
                     p2Fetch = p1
 
-                # Just a technicality: for the same Re w, the mirror mode is always the second one in the file
+                # Just a technicality: for Re w1 + Re w2 = 0, the mirror mode is always the second one in the file
                 # so if mirror1=1, we have to fetch the mirror ratio
                 sameOmega=False
                 if (np.isclose(np.real(self.parent1.omega() + self.parent2.omega()), 0) and mirror1Fetch):
@@ -134,6 +138,7 @@ class QuadraticQNM:
                     m1Fetch = - m1Fetch
                     m2Fetch = - m2Fetch
 
+                # Fetch the ratio!
                 data = NLfile.loc[(NLfile.l==self.l) & (NLfile.l1==l1Fetch) & (NLfile.l2==l2Fetch)
                 & (NLfile.n1==n1Fetch) & (NLfile.n2==n2Fetch) & (NLfile.p==p) 
                 & (NLfile.p1==p1Fetch) & (NLfile.p2==p2Fetch)
@@ -144,10 +149,10 @@ class QuadraticQNM:
                 # The final ratio includes a 3j symbol and sym factor
                 NLRatio[p1,p2] = (float(data['ReANL'].iloc[0]) + 1j*float(data['ImANL'].iloc[0])) * (-1)**(m1Fetch+m2Fetch)*float(wigner_3j(self.l, l1Fetch, l2Fetch, -(m1Fetch+m2Fetch), m1Fetch, m2Fetch))/self.symFactor
                 if sameOmega:
-                    NLRatio[p1,p2] = (-1)**(self.l+self.l1+self.l2)*np.conjugate(NLRatio[p1,p2])
+                    NLRatio[p1,p2] = (-1)**(self.l+self.l1+self.l2)*np.conjugate(NLRatio[p1,p2]) # cf eq. 5.4 of 2406.14611 for a mode with definite parity
                 # print(NLRatio[p1,p2])
 
-        # Compute the final ratio
+        # Compute the final ratio from eq. 5.1 and 5.2 of 2406.14611
         if ((self.l+self.l1+self.l2)%2==0):
             alpha = NLRatio[0,0]*(1+self.kappa1)*(1+self.kappa2) + NLRatio[1,1]*(1-self.kappa1)*(1-self.kappa2)
             beta = NLRatio[0,1]*(1+self.kappa1)*(1-self.kappa2) + NLRatio[1,0]*(1-self.kappa1)*(1+self.kappa2)
@@ -156,9 +161,13 @@ class QuadraticQNM:
             alpha = NLRatio[0,1]*(1+self.kappa1)*(1-self.kappa2) + NLRatio[1,0]*(1-self.kappa1)*(1+self.kappa2)
 
         R = (alpha+beta)/4
-        kappa = (alpha-beta)/(alpha+beta)
+        # Check if R=0: if yes, we do not care about kappa, if not we use formulas 5.1 and 5.2
+        if (R==0):
+            kappa = (-1)**(self.l+self.m)
+        else:
+            kappa = (alpha-beta)/(alpha+beta)
 
-        # If it's a mirror mode at second order, use eq. ??
+        # If it's a mirror mode at second order, use eq. 5.4 of 2406.14611
         if self.mirror:
             R = np.conjugate(kappa*R/self.kappa1/self.kappa2)
             kappa = 1/np.conjugate(kappa)
