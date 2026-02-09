@@ -143,7 +143,7 @@ class QuadraticQNM:
                 & (NLfile.n1==n1Fetch) & (NLfile.n2==n2Fetch) & (NLfile.p==p) 
                 & (NLfile.p1==p1Fetch) & (NLfile.p2==p2Fetch)
                 & (NLfile.mirror1==mirror1Fetch) & (NLfile.mirror2==mirror2Fetch)]
-                if len(data)==0 or len(data)>1:
+                if len(data)==0:
                     raise Exception(f'Nonlinear amplitude not computed for these values: l={self.l}, l1={l1Fetch}, l2={l2Fetch}, n1={n1Fetch}, n2={n2Fetch}, mirror1={mirror1Fetch}, mirror2={mirror2Fetch}, p={p}, p1={p1Fetch}, p2={p2Fetch}')
 
                 # The final ratio includes a 3j symbol and sym factor
